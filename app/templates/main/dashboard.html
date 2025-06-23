@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}Tableau de bord{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">Tableau de bord</h2>
+                    <p class="text-muted">Bienvenue, {{ current_user.email }}</p>
+                    <p class="text-muted">Rôle : {{ current_user.role or 'Aucun' }}</p>
+                </div>
+            </div>
+
+            {% if current_user.is_admin() %}
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h3 class="card-title">Administration</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a href="{{ url_for('admin.users') }}" class="btn btn-outline-primary w-100 mb-2">Gérer les utilisateurs</a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{{ url_for('legislative.new_text') }}" class="btn btn-primary w-100 mb-2">Créer un nouveau texte</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if current_user.is_reporter() and not current_user.is_admin() %}
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h3 class="card-title">Rapporteur</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a href="{{ url_for('legislative.new_text') }}" class="btn btn-primary w-100 mb-2">Créer un nouveau texte</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if current_user.is_secretariat() %}
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h3 class="card-title">Secrétariat</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a href="{{ url_for('secretariat.amendments') }}" class="btn btn-primary w-100 mb-2">Gérer les amendements</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h3 class="card-title">Textes législatifs</h3>
+                    {% if texts %}
+                        <div class="row">
+                            {% for text in texts %}
+                            <div class="col-md-6 mb-4">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h4 class="card-title">{{ text.title }}</h4>
+                                        <p class="text-muted">Statut : {{ text.status }}</p>
+                                        <p class="text-muted">Créé le : {{ text.created_at.strftime('%d/%m/%Y') }}</p>
+                                        <p class="card-text">{{ text.content[:200] }}...</p>
+                                    </div>
+                                    <div class="card-footer bg-transparent">
+                                        <a href="{{ url_for('legislative.view_text', text_id=text.id) }}" class="btn btn-primary w-100">Voir le texte</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-muted">Aucun texte législatif disponible.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

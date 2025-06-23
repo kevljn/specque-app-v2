@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">Gestion des amendements</h2>
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="filter-article" class="form-label">Filtrer par article</label>
+                                <input id="filter-article" type="number" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="filter-type" class="form-label">Type</label>
+                                <select id="filter-type" class="form-select">
+                                    <option value="">Tous</option>
+                                    <option value="add">Ajout</option>
+                                    <option value="edit">Modification</option>
+                                    <option value="delete">Suppression</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="filter-origin" class="form-label">Origine</label>
+                                <input id="filter-origin" type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="amendments-table" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Ordre</th>
+                                    <th>Article</th>
+                                    <th>Type</th>
+                                    <th>Origine</th>
+                                    <th>Statut</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for amend in amendments %}
+                                <tr data-id="{{ amend.id }}">
+                                    <td class="order-cell">{{ amend.order or '' }}</td>
+                                    <td>{{ amend.paragraph_index }}</td>
+                                    <td>{{ amend.type }}</td>
+                                    <td>{{ amend.origin }}</td>
+                                    <td>{{ amend.status }}</td>
+                                    <td>
+                                        <button class="btn btn-outline-primary btn-sm group-btn">Regrouper</button>
+                                        <button class="btn btn-outline-warning btn-sm conflict-btn">Conflit</button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+<script>
+    // Drag & drop
+    const tableBody = document.querySelector('#amendments-table tbody');
+    new Sortable(tableBody, {
+        animation: 150,
+        onEnd: function (evt) {
+            const ids = Array.from(tableBody.querySelectorAll('tr')).map(tr => tr.dataset.id);
+            fetch('/secretariat/amendments/reorder', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({order: ids})
+            }).then(resp => resp.json()).then(data => {
+                if (data.status === 'success') {
+                    ids.forEach((id, i) => {
+                        tableBody.querySelector(`tr[data-id='${id}'] .order-cell`).textContent = i+1;
+                    });
+                }
+            });
+        }
+    });
+
+    // Filtres dynamiques
+    document.getElementById('filter-article').addEventListener('input', function() {
+        const val = this.value;
+        document.querySelectorAll('#amendments-table tbody tr').forEach(tr => {
+            tr.style.display = (!val || tr.children[1].textContent == val) ? '' : 'none';
+        });
+    });
+
+    document.getElementById('filter-type').addEventListener('change', function() {
+        const val = this.value;
+        document.querySelectorAll('#amendments-table tbody tr').forEach(tr => {
+            tr.style.display = (!val || tr.children[2].textContent == val) ? '' : 'none';
+        });
+    });
+
+    document.getElementById('filter-origin').addEventListener('input', function() {
+        const val = this.value.toLowerCase();
+        document.querySelectorAll('#amendments-table tbody tr').forEach(tr => {
+            tr.style.display = (!val || tr.children[3].textContent.toLowerCase().includes(val)) ? '' : 'none';
+        });
+    });
+</script>
+{% endblock %} 

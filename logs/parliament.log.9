@@ -1,0 +1,85 @@
+2025-06-06 02:01:55,059 ERROR: Exception on / [GET] [in /Users/kevinlejeune/Downloads/specque-app-v2/venv/lib/python3.10/site-packages/flask/app.py:828]
+Traceback (most recent call last):
+  File "/Users/kevinlejeune/Downloads/specque-app-v2/venv/lib/python3.10/site-packages/flask/app.py", line 870, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/kevinlejeune/Downloads/specque-app-v2/venv/lib/python3.10/site-packages/flask/app.py", line 855, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/Users/kevinlejeune/Downloads/specque-app-v2/venv/lib/python3.10/site-packages/flask_login/utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+  File "/Users/kevinlejeune/Downloads/specque-app-v2/app/routes/main.py", line 11, in dashboard
+    return render_template('main/dashboard.html', texts=texts)
+  File "/Users/kevinlejeune/Downloads/specque-app-v2/venv/lib/python3.10/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/Users/kevinlejeune/Downloads/specque-app-v2/venv/lib/python3.10/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/Users/kevinlejeune/Downloads/specque-app-v2/venv/lib/python3.10/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/Users/kevinlejeune/Downloads/specque-app-v2/venv/lib/python3.10/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/Users/kevinlejeune/Downloads/specque-app-v2/app/templates/main/dashboard.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/Users/kevinlejeune/Downloads/specque-app-v2/app/templates/base.html", line 13, in top-level template code
+    <li><strong><a href="{{ url_for('main.index') }}" style="text-decoration:none;color:inherit;">Simulation Parlementaire</a></strong></li>
+  File "/Users/kevinlejeune/Downloads/specque-app-v2/venv/lib/python3.10/site-packages/flask/app.py", line 1074, in url_for
+    return self.handle_url_build_error(error, endpoint, values)
+  File "/Users/kevinlejeune/Downloads/specque-app-v2/venv/lib/python3.10/site-packages/flask/app.py", line 1063, in url_for
+    rv = url_adapter.build(  # type: ignore[union-attr]
+  File "/Users/kevinlejeune/Downloads/specque-app-v2/venv/lib/python3.10/site-packages/werkzeug/routing/map.py", line 919, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'main.index'. Did you mean 'main.dashboard' instead?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/kevinlejeune/Downloads/specque-app-v2/venv/lib/python3.10/site-packages/flask/app.py", line 1463, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/kevinlejeune/Downloads/specque-app-v2/venv/lib/python3.10/site-packages/flask/app.py", line 872, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/kevinlejeune/Downloads/specque-app-v2/venv/lib/python3.10/site-packages/flask/app.py", line 762, in handle_user_exception
+    return self.ensure_sync(handler)(e)  # type: ignore[no-any-return]
+  File "/Users/kevinlejeune/Downloads/specque-app-v2/app/errors.py", line 42, in unhandled_exception
+    return render_template('errors/500.html'), 500
+  File "/Users/kevinlejeune/Downloads/specque-app-v2/venv/lib/python3.10/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/Users/kevinlejeune/Downloads/specque-app-v2/venv/lib/python3.10/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/Users/kevinlejeune/Downloads/specque-app-v2/venv/lib/python3.10/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/Users/kevinlejeune/Downloads/specque-app-v2/venv/lib/python3.10/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/Users/kevinlejeune/Downloads/specque-app-v2/app/templates/errors/500.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/Users/kevinlejeune/Downloads/specque-app-v2/app/templates/base.html", line 13, in top-level template code
+    <li><strong><a href="{{ url_for('main.index') }}" style="text-decoration:none;color:inherit;">Simulation Parlementaire</a></strong></li>
+  File "/Users/kevinlejeune/Downloads/specque-app-v2/venv/lib/python3.10/site-packages/flask/app.py", line 1074, in url_for
+    return self.handle_url_build_error(error, endpoint, values)
+  File "/Users/kevinlejeune/Downloads/specque-app-v2/venv/lib/python3.10/site-packages/flask/app.py", line 1063, in url_for
+    rv = url_adapter.build(  # type: ignore[union-attr]
+  File "/Users/kevinlejeune/Downloads/specque-app-v2/venv/lib/python3.10/site-packages/werkzeug/routing/map.py", line 919, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'main.index'. Did you mean 'main.dashboard' instead?
+2025-06-06 02:04:29,616 INFO: Parliament startup [in /Users/kevinlejeune/Downloads/specque-app-v2/app/utils/logger.py:23]
+2025-06-06 02:06:01,649 ERROR: Unhandled Exception: Could not build url for endpoint 'secretariat.amendments'. Did you mean 'legislative.new_amendment' instead? [in /Users/kevinlejeune/Downloads/specque-app-v2/app/errors.py:39]
+2025-06-06 02:06:21,956 ERROR: Unhandled Exception: Could not build url for endpoint 'secretariat.amendments'. Did you mean 'legislative.new_amendment' instead? [in /Users/kevinlejeune/Downloads/specque-app-v2/app/errors.py:39]
+2025-06-06 02:06:45,409 ERROR: Unhandled Exception: Could not build url for endpoint 'secretariat.amendments'. Did you mean 'legislative.new_amendment' instead? [in /Users/kevinlejeune/Downloads/specque-app-v2/app/errors.py:39]
+2025-06-06 02:09:49,074 INFO: Parliament startup [in /Users/kevinlejeune/Downloads/specque-app-v2/app/utils/logger.py:23]
+2025-06-06 02:10:00,174 ERROR: Unhandled Exception: Could not build url for endpoint 'secretariat.amendments'. Did you mean 'legislative.new_amendment' instead? [in /Users/kevinlejeune/Downloads/specque-app-v2/app/errors.py:39]
+2025-06-06 02:10:07,663 ERROR: Unhandled Exception: Could not build url for endpoint 'secretariat.amendments'. Did you mean 'legislative.new_amendment' instead? [in /Users/kevinlejeune/Downloads/specque-app-v2/app/errors.py:39]
+2025-06-06 02:10:51,910 INFO: Parliament startup [in /Users/kevinlejeune/Downloads/specque-app-v2/app/utils/logger.py:23]
+2025-06-06 02:10:53,701 ERROR: Unhandled Exception: Could not build url for endpoint 'secretariat.amendments'. Did you mean 'legislative.new_amendment' instead? [in /Users/kevinlejeune/Downloads/specque-app-v2/app/errors.py:39]
+2025-06-06 02:10:58,686 ERROR: Unhandled Exception: Could not build url for endpoint 'secretariat.amendments'. Did you mean 'legislative.new_amendment' instead? [in /Users/kevinlejeune/Downloads/specque-app-v2/app/errors.py:39]
+2025-06-06 02:11:47,041 INFO: Parliament startup [in /Users/kevinlejeune/Downloads/specque-app-v2/app/utils/logger.py:23]
+2025-06-06 02:12:40,032 INFO: Parliament startup [in /Users/kevinlejeune/Downloads/specque-app-v2/app/utils/logger.py:23]
+2025-06-06 02:12:57,752 ERROR: Unhandled Exception: Could not build url for endpoint 'secretariat.amendments'. Did you mean 'legislative.new_amendment' instead? [in /Users/kevinlejeune/Downloads/specque-app-v2/app/errors.py:39]
+2025-06-06 02:13:02,967 ERROR: Unhandled Exception: Could not build url for endpoint 'secretariat.amendments'. Did you mean 'legislative.new_amendment' instead? [in /Users/kevinlejeune/Downloads/specque-app-v2/app/errors.py:39]
+2025-06-06 02:13:12,025 ERROR: Unhandled Exception: Could not build url for endpoint 'secretariat.amendments'. Did you mean 'legislative.new_amendment' instead? [in /Users/kevinlejeune/Downloads/specque-app-v2/app/errors.py:39]
+2025-06-06 02:13:15,566 ERROR: Unhandled Exception: Could not build url for endpoint 'secretariat.amendments'. Did you mean 'legislative.new_amendment' instead? [in /Users/kevinlejeune/Downloads/specque-app-v2/app/errors.py:39]
+2025-06-06 02:14:21,539 INFO: Parliament startup [in /Users/kevinlejeune/Downloads/specque-app-v2/app/utils/logger.py:23]
+2025-06-06 02:14:32,829 INFO: Parliament startup [in /Users/kevinlejeune/Downloads/specque-app-v2/app/utils/logger.py:23]
+2025-06-06 02:15:59,235 INFO: Parliament startup [in /Users/kevinlejeune/Downloads/specque-app-v2/app/utils/logger.py:23]
+2025-06-06 02:37:36,304 INFO: Parliament startup [in /Users/kevinlejeune/Downloads/specque-app-v2/app/utils/logger.py:23]
+2025-06-06 02:40:10,706 INFO: Parliament startup [in /Users/kevinlejeune/Downloads/specque-app-v2/app/utils/logger.py:23]
+2025-06-06 02:43:07,940 INFO: Parliament startup [in /Users/kevinlejeune/Downloads/specque-app-v2/app/utils/logger.py:23]
+2025-06-06 02:48:04,603 INFO: Parliament startup [in /Users/kevinlejeune/Downloads/specque-app-v2/app/utils/logger.py:23]
+2025-06-06 03:05:29,757 INFO: Parliament startup [in /Users/kevinlejeune/Downloads/specque-app-v2/app/utils/logger.py:23]
+2025-06-06 03:05:31,242 INFO: Parliament startup [in /Users/kevinlejeune/Downloads/specque-app-v2/app/utils/logger.py:23]

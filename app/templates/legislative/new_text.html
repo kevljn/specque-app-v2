@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Nouveau texte législatif{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title mb-4">Nouveau texte législatif</h2>
+                    <form method="POST">
+                        {{ form.hidden_tag() }}
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Titre</label>
+                            {{ form.title(class="form-control", id="title") }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="content" class="form-label">Contenu</label>
+                            {{ form.content(class="form-control", id="content", rows=20) }}
+                        </div>
+                        <div class="d-grid">
+                            {{ form.submit(class="btn btn-primary") }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Simple éditeur Markdown
+    const content = document.getElementById('content');
+    content.addEventListener('input', function() {
+        // Ajouter des raccourcis Markdown si nécessaire
+    });
+</script>
+{% endblock %} 

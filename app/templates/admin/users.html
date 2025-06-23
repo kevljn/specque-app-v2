@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">Gestion des utilisateurs</h2>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Email</th>
+                                    <th>Rôle</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for user in users %}
+                                <tr>
+                                    <td>{{ user.email }}</td>
+                                    <td>{{ user.get_role_display_name() }}</td>
+                                    <td>
+                                        <a href="{{ url_for('admin.assign_role', user_id=user.id) }}" class="btn btn-outline-primary btn-sm">Attribuer/modifier le rôle</a>
+                                        <button class="btn btn-outline-secondary btn-sm" onclick="alert('À implémenter : édition utilisateur {{ user.id }}')">Éditer</button>
+                                        <button class="btn btn-outline-danger btn-sm" onclick="alert('À implémenter : suppression utilisateur {{ user.id }}')">Supprimer</button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
